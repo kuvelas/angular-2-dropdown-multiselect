@@ -47,7 +47,7 @@ export interface IMultiSelectTexts {
 @Pipe({
     name: 'searchFilter'
 })
-class MultiSelectSearchFilter {
+export class MultiSelectSearchFilter {
     transform(options: Array<IMultiSelectOption>, args: string): Array<IMultiSelectOption> {
         return options.filter((option: IMultiSelectOption) => option.name.toLowerCase().indexOf((args || '').toLowerCase()) > -1);
     }
@@ -199,6 +199,9 @@ export class MultiselectDropdown implements OnInit, DoCheck, ControlValueAccesso
         if (index > -1) {
             this.model.splice(index, 1);
         } else {
+			if(this.settings.selectionLimit === 1){
+				this.model = [];
+			}
             if (this.settings.selectionLimit === 0 || this.model.length < this.settings.selectionLimit) {
                 this.model.push(option.id);
             } else {
